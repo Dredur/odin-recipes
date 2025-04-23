@@ -1,6 +1,5 @@
 * {
    font-family: Georgia, Verdana, Arial, sans-serif;
-   text-align: justify;
    box-sizing: border-box;
    /* prevent browser defaults from adding margin or padding*/
    margin: 0;
@@ -12,7 +11,7 @@ body {
   margin: 0 auto;  
 }
 
-ul, ol {
+ul, ol, li {
   list-style-position: inside;
   margin: 8px 0;
 }
@@ -23,7 +22,9 @@ li li{
 }
 
 .recipe-list li{
+  list-style-type: none;
   font-size: 1.5em;
+  text-align: center;
   padding: 8px 0;
 }
 
