@@ -1,0 +1,107 @@
+* {
+   font-family: Georgia, Verdana, Arial, sans-serif;
+   box-sizing: border-box;
+   /* prevent browser defaults from adding margin or padding*/
+   margin: 0;
+   padding: 0;
+}
+
+:root{
+  --card-width: 40vw;
+  --cardText-width: calc(0.9*var(--card-width));
+  --cardImgWrapper-width: calc(var(--card-width) - var(--cardText-width));
+  --cardImg-width: calc(0.35*var(--card-width)); 
+  --cardImg-position: calc((var(--cardImg-width)/3) - (var(--cardImgWrapper-width)/2));
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  padding: 2vh 0;
+  background-color: #c5d0e3;
+}
+
+#recipe-list{
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--cardImg-width)*0.25);
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  width: var(--card-width);
+}
+
+/* Benötigt für drop-shadow und damit Bild unabhängige Größe bekommen kann
+ (würde sonst mit der Flexbox skalieren und das andere Element verkleinern) */
+.cardImgWrapper{
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cardImgWrapper-width);
+  filter: drop-shadow(-2px 2px 0.3rem black);
+}
+
+.cardImgWrapper img {
+  width: var(--cardImg-width);
+  aspect-ratio: 1;
+  object-fit: cover;
+  clip-path: circle(farthest-side at center);
+  position: relative;
+  right: var(--cardImg-position);
+  pointer-events: none;
+}
+
+.cardText {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  width: var(--cardText-width);
+  padding-right: calc(var(--cardImg-width)/2 - var(--cardImgWrapper-width)/2 + var(--cardImg-position));
+  /* ^ gleiche wie padding-right: calc(2*var(--cardImg-position)) */
+  padding-left: 5%;
+  border: 1px solid black;
+  border-radius: 1rem;
+  background-color: #105267;  
+  /* background: #FCF8EE;
+  background: linear-gradient(0deg,#FFF3D1 0%, #FCF8EE 100%); */
+  filter: drop-shadow(0 0 0.1rem black);
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.card a{
+  text-decoration: none;
+  color: #E5E7EB;
+  /* color: darkblue; */
+}
+
+.header, .footer{
+    display: flex;
+    justify-content: space-around;
+    padding: 1em 0;
+    background-color: #1F2937;
+    color: #E5E7EB;
+}
+
+@media screen and (max-width:1025px) {
+
+  :root{
+  --card-width: 60vw;
+  }
+
+  .cardText {
+    font-size: 2rem;
+  }
+
+}
