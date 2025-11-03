@@ -1,17 +1,79 @@
-* {
-   font-family: Georgia, Verdana, Arial, sans-serif;
-   box-sizing: border-box;
-   /* prevent browser defaults from adding margin or padding*/
-   margin: 0;
-   padding: 0;
-}
+@import url('https://fonts.googleapis.com/css?family=Cormorant Garamond');
+@import url('https://fonts.googleapis.com/css?family=Inter');
 
-:root{
-  --card-width: 40vw;
+:root {
+  /* light theme colors from 
+  https://material-foundation.github.io/material-theme-builder/ */
+  --color-primary: rgb(27 107 81);
+  --color-surface-tint: rgb(27 107 81);
+  --color-on-primary: rgb(255 255 255);
+  --color-primary-container: rgb(166 242 210);
+  --color-on-primary-container: rgb(0 81 59);
+  --color-secondary: rgb(76 99 89);
+  --color-on-secondary: rgb(255 255 255);
+  --color-secondary-container: rgb(206 233 219);
+  --color-on-secondary-container: rgb(53 75 65);
+  --color-tertiary: rgb(62 99 116);
+  --color-on-tertiary: rgb(255 255 255);
+  --color-tertiary-container: rgb(194 232 253);
+  --color-on-tertiary-container: rgb(38 75 92);
+  --color-error: rgb(186 26 26);
+  --color-on-error: rgb(255 255 255);
+  --color-error-container: rgb(255 218 214);
+  --color-on-error-container: rgb(147 0 10);
+  --color-background: rgb(245 251 245);
+  --color-on-background: rgb(23 29 26);
+  --color-surface: rgb(245 251 245);
+  --color-on-surface: rgb(23 29 26);
+  --color-surface-variant: rgb(219 229 222);
+  --color-on-surface-variant: rgb(64 73 68);
+  --color-outline: rgb(112 121 116);
+  --color-outline-variant: rgb(191 201 194);
+  --color-shadow: rgb(0 0 0);
+  --color-scrim: rgb(0 0 0);
+  --color-inverse-surface: rgb(44 50 46);
+  --color-inverse-on-surface: rgb(236 242 237);
+  --color-inverse-primary: rgb(138 214 182);
+  --color-primary-fixed: rgb(166 242 210);
+  --color-on-primary-fixed: rgb(0 33 22);
+  --color-primary-fixed-dim: rgb(138 214 182);
+  --color-on-primary-fixed-variant: rgb(0 81 59);
+  --color-secondary-fixed: rgb(206 233 219);
+  --color-on-secondary-fixed: rgb(9 32 23);
+  --color-secondary-fixed-dim: rgb(179 204 191);
+  --color-on-secondary-fixed-variant: rgb(53 75 65);
+  --color-tertiary-fixed: rgb(194 232 253);
+  --color-on-tertiary-fixed: rgb(0 31 42);
+  --color-tertiary-fixed-dim: rgb(166 204 224);
+  --color-on-tertiary-fixed-variant: rgb(38 75 92);
+  --color-surface-dim: rgb(214 219 214);
+  --color-surface-bright: rgb(245 251 245);
+  --color-surface-container-lowest: rgb(255 255 255);
+  --color-surface-container-low: rgb(239 245 240);
+  --color-surface-container: rgb(233 239 234);
+  --color-surface-container-high: rgb(228 234 228);
+  --color-surface-container-highest: rgb(222 228 223);
+
+  --card-width: 80vw;
   --cardText-width: calc(0.9*var(--card-width));
   --cardImgWrapper-width: calc(var(--card-width) - var(--cardText-width));
-  --cardImg-width: calc(0.35*var(--card-width)); 
+  --cardImg-width: calc(0.35*var(--card-width));
   --cardImg-position: calc((var(--cardImg-width)/3) - (var(--cardImgWrapper-width)/2));
+  --card-gap: 1.5rem;
+
+  --font-fancy: 'Cormorant Garamond', Georgia, serif;
+  --font-normal: 'Inter', Verdana, sans-serif;
+}
+
+
+* {
+  font-family: 'Cormorant Garamond', Verdana, Arial, sans-serif;
+  box-sizing: border-box;
+  /* prevent browser defaults from adding margin or padding*/
+  margin: 0;
+  padding: 0;
+
+  font-size: clamp(1rem, 0.75rem + 1.5vw, 2rem);
 }
 
 body {
@@ -20,19 +82,19 @@ body {
   min-height: 100vh;
 }
 
-.content{
+.content {
   display: flex;
   flex-direction: column;
   align-items: center;
   flex: 1;
-  padding: 2vh 0;
-  background-color: #c5d0e3;
+  padding: var(--card-gap);
+  background-color: var(--color-surface);
 }
 
-#recipe-list{
+#recipe-list {
   display: flex;
   flex-direction: column;
-  gap: calc(var(--cardImg-width)*0.25);
+  gap: var(--card-gap);
 }
 
 .card {
@@ -41,15 +103,41 @@ body {
   width: var(--card-width);
 }
 
+.cardText {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  width: var(--cardText-width);
+  padding-right: calc(var(--cardImg-width)/2 - var(--cardImgWrapper-width)/2 + var(--cardImg-position));
+  /* ^ gleiche wie padding-right: calc(2*var(--cardImg-position)) */
+  padding-left: 5%;
+  border-radius: 1rem;
+  background-color: var(--color-surface-container);
+  color: var(--color-on-surface);
+  /* background: #FCF8EE;
+  background: linear-gradient(0deg,#FFF3D1 0%, #FCF8EE 100%); */
+  filter: drop-shadow(0 0 0.1rem rgba(0, 0, 0, 0.5)rgba(0, 0, 0, 0.5));
+  
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+a {
+  text-decoration: none;
+  /* color: darkblue; */
+  font-size: clamp(1rem, 1rem + 1.5vw, 2rem);
+  color: var(--color-on-primary-container);
+}
+
 /* Benötigt für drop-shadow und damit Bild unabhängige Größe bekommen kann
  (würde sonst mit der Flexbox skalieren und das andere Element verkleinern) */
-.cardImgWrapper{
+.cardImgWrapper {
   padding: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
   width: var(--cardImgWrapper-width);
-  filter: drop-shadow(-2px 2px 0.3rem black);
+  filter: drop-shadow(4px 4px 0.3rem rgba(0, 0, 0, 0.5));
 }
 
 .cardImgWrapper img {
@@ -62,46 +150,80 @@ body {
   pointer-events: none;
 }
 
-.cardText {
+.header,
+.footer {
   display: flex;
-  align-items: center;
-  align-self: stretch;
-  width: var(--cardText-width);
-  padding-right: calc(var(--cardImg-width)/2 - var(--cardImgWrapper-width)/2 + var(--cardImg-position));
-  /* ^ gleiche wie padding-right: calc(2*var(--cardImg-position)) */
-  padding-left: 5%;
-  border: 1px solid black;
-  border-radius: 1rem;
-  background-color: #105267;  
-  /* background: #FCF8EE;
-  background: linear-gradient(0deg,#FFF3D1 0%, #FCF8EE 100%); */
-  filter: drop-shadow(0 0 0.1rem black);
-  font-size: 1.5rem;
-  font-weight: bold;
+  justify-content: space-around;
+  padding: 1em 0;
+  background-color: var(--color-surface-variant);
+  color: var(--color-on-primary-container);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 
-.card a{
-  text-decoration: none;
-  color: #E5E7EB;
-  /* color: darkblue; */
-}
+/* @media screen and (max-width:1025px) {
 
-.header, .footer{
-    display: flex;
-    justify-content: space-around;
-    padding: 1em 0;
-    background-color: #1F2937;
-    color: #E5E7EB;
-}
-
-@media screen and (max-width:1025px) {
-
-  :root{
-  --card-width: 60vw;
+  :root {
+    --card-width: 60vw;
   }
 
   .cardText {
     font-size: 2rem;
   }
 
+} */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* dark theme colors from
+    https://material-foundation.github.io/material-theme-builder/ */
+    --color-primary: rgb(138 214 182);
+    --color-surface-tint: rgb(138 214 182);
+    --color-on-primary: rgb(0 56 40);
+    --color-primary-container: rgb(0 81 59);
+    --color-on-primary-container: rgb(166 242 210);
+    --color-secondary: rgb(179 204 191);
+    --color-on-secondary: rgb(30 53 44);
+    --color-secondary-container: rgb(53 75 65);
+    --color-on-secondary-container: rgb(206 233 219);
+    --color-tertiary: rgb(166 204 224);
+    --color-on-tertiary: rgb(9 53 68);
+    --color-tertiary-container: rgb(38 75 92);
+    --color-on-tertiary-container: rgb(194 232 253);
+    --color-error: rgb(255 180 171);
+    --color-on-error: rgb(105 0 5);
+    --color-error-container: rgb(147 0 10);
+    --color-on-error-container: rgb(255 218 214);
+    --color-background: rgb(15 21 18);
+    --color-on-background: rgb(222 228 223);
+    --color-surface: rgb(15 21 18);
+    --color-on-surface: rgb(222 228 223);
+    --color-surface-variant: rgb(64 73 68);
+    --color-on-surface-variant: rgb(191 201 194);
+    --color-outline: rgb(137 147 141);
+    --color-outline-variant: rgb(64 73 68);
+    --color-shadow: rgb(0 0 0);
+    --color-scrim: rgb(0 0 0);
+    --color-inverse-surface: rgb(222 228 223);
+    --color-inverse-on-surface: rgb(44 50 46);
+    --color-inverse-primary: rgb(27 107 81);
+    --color-primary-fixed: rgb(166 242 210);
+    --color-on-primary-fixed: rgb(0 33 22);
+    --color-primary-fixed-dim: rgb(138 214 182);
+    --color-on-primary-fixed-variant: rgb(0 81 59);
+    --color-secondary-fixed: rgb(206 233 219);
+    --color-on-secondary-fixed: rgb(9 32 23);
+    --color-secondary-fixed-dim: rgb(179 204 191);
+    --color-on-secondary-fixed-variant: rgb(53 75 65);
+    --color-tertiary-fixed: rgb(194 232 253);
+    --color-on-tertiary-fixed: rgb(0 31 42);
+    --color-tertiary-fixed-dim: rgb(166 204 224);
+    --color-on-tertiary-fixed-variant: rgb(38 75 92);
+    --color-surface-dim: rgb(15 21 18);
+    --color-surface-bright: rgb(52 59 55);
+    --color-surface-container-lowest: rgb(10 15 13);
+    --color-surface-container-low: rgb(23 29 26);
+    --color-surface-container: rgb(27 33 30);
+    --color-surface-container-high: rgb(37 43 40);
+    --color-surface-container-highest: rgb(48 54 51);
+  }
 }
