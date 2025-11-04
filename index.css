@@ -63,6 +63,15 @@
 
   --font-fancy: 'Cormorant Garamond', Georgia, serif;
   --font-normal: 'Inter', Verdana, sans-serif;
+
+  /* For displays > 425px. 
+  For smaller displays there is a media query. */
+  --font-size-default: 1rem;
+  --textblock-width: 66ch;
+}
+
+html {
+  font-size: var(--font-size-default);
 }
 
 * {
@@ -185,17 +194,14 @@ a {
 }
 
 
-/* @media screen and (max-width:1025px) {
+@media only screen and ((max-device-width: 425px) or (max-width: 425px)) {
 
   :root {
-    --card-width: 60vw;
+    /* Bigger text for smaller portrait mobile devices*/
+    --font-size-default: clamp(1rem, 0.75rem + 1.5vw, 2rem);
+    --textblock-width: 45ch;
   }
-
-  .cardText {
-    font-size: 2rem;
-  }
-
-} */
+}
 
 @media (prefers-color-scheme: dark) {
   :root {

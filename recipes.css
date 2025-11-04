@@ -56,6 +56,12 @@
 
   --font-fancy: 'Cormorant Garamond', Georgia, serif;
   --font-normal: 'Inter', Verdana, sans-serif;  
+  --font-size-default: 1rem;
+  --textblock-width: 66ch;
+}
+
+html {
+  font-size: var(--font-size-default);
 }
 
 * {
@@ -64,6 +70,7 @@
    margin: 0;
    padding: 0;
 }
+
 
 h1 {
   font-size: clamp(3rem, 2.7273rem + 1.0909vw, 3.6rem);
@@ -95,7 +102,7 @@ p, a, li, ul, ol {
 
 body {
   min-height: 100vh;
-  width: 66ch;
+  width: var(--textblock-width);
   margin: 0 auto;
   background-color: var(--color-surface);
 }
@@ -149,6 +156,15 @@ img {
   width: 100%;
   height: 100%;
   margin: 16px 0;
+}
+
+@media only screen and ((max-device-width: 425px) or (max-width: 425px)) {
+
+  :root {
+    /* Bigger text for smaller portrait mobile devices*/
+    --font-size-default: clamp(1rem, 0.75rem + 1.5vw, 2rem);
+    --textblock-width: 45ch;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
