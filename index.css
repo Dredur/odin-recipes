@@ -138,7 +138,7 @@ body {
   padding-right: calc(var(--cardImg-width)/2 - var(--cardImgWrapper-width)/2 + var(--cardImg-position));
   /* ^ gleiche wie padding-right: calc(2*var(--cardImg-position)) */
   padding-left: 5%;
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   background-color: var(--color-surface-container);
   color: var(--color-on-surface);
   /* background: #FCF8EE;

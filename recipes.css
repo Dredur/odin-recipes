@@ -95,12 +95,9 @@ p, a, li, ul, ol {
 
 body {
   min-height: 100vh;
-  width: 45ch;
+  width: 66ch;
   margin: 0 auto;
-}
-
-html {
-  font-size: clamp(1rem, 0.75rem + 1.5vw, 2rem);
+  background-color: var(--color-surface);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -113,11 +110,17 @@ h1, h2, h3, h4, h5, h6 {
 
 ul, ol, li, p {
   font-family: var(--font-normal);
+  color: var(--color-on-surface);
 }
 
 p {
   padding: 8px 0px;
   line-height: 1.5;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-tertiary)
 }
 
 ul, ol, li {
