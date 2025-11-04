@@ -65,6 +65,34 @@
    padding: 0;
 }
 
+h1 {
+  font-size: clamp(3rem, 2.7273rem + 1.0909vw, 3.6rem);
+}
+
+h2 {
+  font-size: clamp(2.25rem, 2.0455rem + 0.8182vw, 2.7rem);
+}
+
+h3 {
+  font-size: clamp(1.875rem, 1.7045rem + 0.6818vw, 2.25rem);
+}
+
+h4 {
+  font-size: clamp(1.5rem, 1.3636rem + 0.5455vw, 1.8rem);
+}
+
+h5 {
+  font-size: clamp(1.25rem, 1.1364rem + 0.4545vw, 1.5rem);
+}
+
+h6 {
+  font-size: clamp(1.125rem, 1.0227rem + 0.4091vw, 1.35rem);
+}
+
+p, a, li, ul, ol {
+  font-size: clamp(0.8333rem, 0.7576rem + 0.303vw, 1rem);
+}
+
 body {
   min-height: 100vh;
   width: 45ch;
