@@ -67,7 +67,7 @@
   /* For displays > 425px. 
   For smaller displays there is a media query. */
   --font-size-default: 1rem;
-  --textblock-width: 66ch;
+  --textblock-width: 45ch;
 }
 
 html {
@@ -88,11 +88,11 @@ h1 {
   font-size: clamp(3rem, 2.7273rem + 1.0909vw, 3.6rem);
 }
 
-h2,a {
+h2 {
   font-size: clamp(2.25rem, 2.0455rem + 0.8182vw, 2.7rem);
 }
 
-h3 {
+h3,a {
   font-size: clamp(1.875rem, 1.7045rem + 0.6818vw, 2.25rem);
 }
 
@@ -193,15 +193,14 @@ a {
   border-bottom: 1px solid var(--color-outline-variant);
 }
 
-
-@media only screen and ((max-device-width: 425px) or (max-width: 425px)) {
+/* Bigger text for smaller portrait mobile devices*/
+/* @media only screen and ((max-device-width: 425px) or (max-width: 425px)) {
 
   :root {
-    /* Bigger text for smaller portrait mobile devices*/
     --font-size-default: clamp(1rem, 0.75rem + 1.5vw, 2rem);
     --textblock-width: 45ch;
   }
-}
+} */
 
 @media (prefers-color-scheme: dark) {
   :root {

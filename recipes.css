@@ -57,7 +57,7 @@
   --font-fancy: 'Cormorant Garamond', Georgia, serif;
   --font-normal: 'Inter', Verdana, sans-serif;  
   --font-size-default: 1rem;
-  --textblock-width: 66ch;
+  --textblock-width: 45ch;
 }
 
 html {
@@ -111,8 +111,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-fancy);
   text-align: center;
   padding: 8px 0px;
-  color: var(--color-primary)
-
+  color: var(--color-primary);
 }
 
 ul, ol, li, p {
@@ -152,20 +151,31 @@ li li{
 }
 
 img {
-  border-radius: 1rem;
-  width: 100%;
+  /* border-radius: 1rem; */
+  width: 100vw;
   height: 100%;
+  max-height: 100vw;
+  object-fit: cover;
   margin: 16px 0;
+  /* margin von body ignorieren */
+  margin-left: calc(-50vw + 50%);
 }
 
-@media only screen and ((max-device-width: 425px) or (max-width: 425px)) {
+
+@media only screen and (min-width: 600px) {
+  :root{
+    --textblock-width: 66ch;
+  }
+}
+
+/* Bigger text for smaller portrait mobile devices*/
+/* @media only screen and ((max-device-width: 425px) or (max-width: 425px)) {
 
   :root {
-    /* Bigger text for smaller portrait mobile devices*/
     --font-size-default: clamp(1rem, 0.75rem + 1.5vw, 2rem);
     --textblock-width: 45ch;
   }
-}
+} */
 
 @media (prefers-color-scheme: dark) {
   :root {
