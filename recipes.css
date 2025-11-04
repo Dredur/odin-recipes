@@ -57,7 +57,7 @@
   --font-fancy: 'Cormorant Garamond', Georgia, serif;
   --font-normal: 'Inter', Verdana, sans-serif;  
   --font-size-default: 1rem;
-  --textblock-width: 45ch;
+  --textblock-width: 66ch;
 }
 
 html {
@@ -102,7 +102,7 @@ p, a, li, ul, ol {
 
 body {
   min-height: 100vh;
-  width: var(--textblock-width);
+  width: min(80vw, var(--textblock-width));
   margin: 0 auto;
   background-color: var(--color-surface);
 }
@@ -159,13 +159,6 @@ img {
   margin: 16px 0;
   /* margin von body ignorieren */
   margin-left: calc(-50vw + 50%);
-}
-
-
-@media only screen and (min-width: 600px) {
-  :root{
-    --textblock-width: 66ch;
-  }
 }
 
 /* Bigger text for smaller portrait mobile devices*/
