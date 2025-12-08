@@ -71,7 +71,6 @@ html {
    padding: 0;
 }
 
-
 h1 {
   font-size: clamp(3rem, 2.7273rem + 1.0909vw, 3.6rem);
 }
@@ -96,8 +95,10 @@ h6 {
   font-size: clamp(1.125rem, 1.0227rem + 0.4091vw, 1.35rem);
 }
 
-p, a, li, ul, ol {
+p, a, li, ul, ol, label{
   font-size: clamp(0.8333rem, 0.7576rem + 0.303vw, 1rem);
+  font-family: var(--font-normal);
+  color: var(--color-on-surface);
 }
 
 body {
@@ -114,12 +115,7 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-primary);
 }
 
-ul, ol, li, p {
-  font-family: var(--font-normal);
-  color: var(--color-on-surface);
-}
-
-p {
+p, label{
   padding: 8px 0px;
   line-height: 1.5;
 }
@@ -134,7 +130,7 @@ ul, ol, li {
   margin: 1em 0;
 }
 
-li {
+li, label {
   line-height: 1.5;
 }
 
@@ -143,22 +139,52 @@ li li{
   padding-left: 40px;
 }
 
-.recipe-list li{
+/*Keine Ahnung warum das hier drinnen ist.
+-> löschen? 
+
+  .recipe-list li{
   list-style-type: none;
   font-size: 1.5em;
   text-align: center;
   padding: 8px 0;
-}
+} */
 
 img {
   /* border-radius: 1rem; */
   width: 100vw;
   height: 100%;
-  max-height: 100vw;
+  max-height: min(100vw, 75vh);
   object-fit: cover;
   margin: 16px 0;
   /* margin von body ignorieren */
   margin-left: calc(-50vw + 50%);
+}
+
+.ingredient-list{
+  display: flex;
+  flex-direction: column;
+
+}
+
+.ingredient-checkbox {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+}
+
+input[type="checkbox"] {
+  width: clamp(0.8333rem, 0.7576rem + 0.303vw, 1rem);
+  height: clamp(0.8333rem, 0.7576rem + 0.303vw, 1rem);
+  flex-shrink: 0;
+}
+
+input[type="checkbox"]:checked {
+  accent-color: var(--color-primary);
+}
+
+input[type="checkbox"]:checked + label {
+  text-decoration: line-through;
+  color: var(--color-outline);
 }
 
 /* Bigger text for smaller portrait mobile devices*/
