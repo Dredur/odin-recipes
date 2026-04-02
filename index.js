@@ -1,5 +1,7 @@
 const recipeListDiv = document.querySelector("#recipe-list");
 
+// Damit wird der am nähesten befindliche Link getriggert, wenn in die recipeList geklickt wird.
+// Ggf. bessere Variante für klicken von Cards implementieren.
 recipeListDiv.addEventListener("click", (event) => {
     window.location = event.target.querySelector("a").href;
 });
