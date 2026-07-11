@@ -19,7 +19,7 @@ function sortDivList() {
     meals = recipes
     .filter((item1) => {
         str1 = item1.querySelector("a").textContent;
-        return !str1.includes("Getränk -");
+        return !str1.includes("Getränk -") && !str1.includes("Sauce -");
     })
     .sort((item1, item2) => {
         str1 = item1.querySelector("a").textContent;
@@ -28,6 +28,17 @@ function sortDivList() {
     })
     .map((item) => recipeListDiv.appendChild(item));
     
+    sauces = recipes.filter((item1) => {
+        str1 = item1.querySelector("a").textContent;
+        return str1.includes("Sauce -");
+    })
+    .sort((item1, item2) => {
+        str1 = item1.querySelector("a").textContent;
+        str2 = item2.querySelector("a").textContent;
+        return str1.localeCompare(str2);
+    })
+    .map((item) => recipeListDiv.appendChild(item));
+
     drinks = recipes.filter((item1) => {
         str1 = item1.querySelector("a").textContent;
         return str1.includes("Getränk -");
