@@ -191,6 +191,7 @@ a {
   background-color: var(--color-surface-variant);
   color: var(--color-primary);
   border-top: 1px solid var(--color-outline-variant);
+  /* border-radius: 0.5rem 0.5rem 0 0; */
   position: sticky;
   bottom: 0px;
   z-index: 1;
@@ -209,13 +210,15 @@ a {
   flex-direction: column;
   align-items: center;
   width: fit-content;
-  filter: saturate(0);
+  filter: saturate(0%);
+  opacity: 60%;
   padding: 0 0.5em;
 
   &.active {
     border-left: 1px solid var(--color-primary);
     border-right: 1px solid var(--color-primary);
-    filter: saturate(1);
+    filter: saturate(100%);
+    opacity: 100%;
   }
 
 }
