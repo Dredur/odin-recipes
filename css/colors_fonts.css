@@ -4,7 +4,7 @@
 :root {  
   /* light theme colors from 
   https://material-foundation.github.io/material-theme-builder/ */
-  --color-primary: rgb(27 107 81);
+  --color-primary: rgb(27 107 81); /*Hex: #1B6B51*/
   --color-surface-tint: rgb(27 107 81);
   --color-on-primary: rgb(255 255 255);
   --color-primary-container: rgb(166 242 210);

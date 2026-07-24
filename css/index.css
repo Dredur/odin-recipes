@@ -84,7 +84,22 @@ body {
   justify-content: space-around;
   gap: var(--card-gap);
   padding-bottom: var(--card-gap);
+
+  opacity: 1;
+  transform: translateX(0);
+  transition: transform 0.4s ease, opacity 0.4s ease;
 }
+ 
+.recipe-list.is-leaving {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.recipe-list.is-entering {
+  opacity: 1;
+  transform: translateX(-100%);
+}
+
 
 .card {
   display: flex;
@@ -171,10 +186,47 @@ a {
 
 .bottom-bar {
   display: flex;
-  justify-content: space-around;
-  padding: 0.75em 1.5em;
-  
+  justify-content: space-between;
+  padding: 0.5em 1.5em;
+  background-color: var(--color-surface-variant);
+  color: var(--color-primary);
+  border-top: 1px solid var(--color-outline-variant);
+  position: sticky;
+  bottom: 0px;
+  z-index: 1;
+}
 
+.bottom-bar button{
+  all: unset;
+  cursor: pointer;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.bottomBarWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+  filter: saturate(0);
+  padding: 0 0.5em;
+
+  &.active {
+    border-left: 1px solid var(--color-primary);
+    border-right: 1px solid var(--color-primary);
+    filter: saturate(1);
+  }
+
+}
+
+.bottomBarWrapper img{
+  height: calc(var(--h1-font-size)*0.6);
+  width: auto;
+}
+
+.bottomBarWrapper p {
+  font-weight: bold;
 }
 
 /* Smaller text <a> for smaller portrait mobile devices*/

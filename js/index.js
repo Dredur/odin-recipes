@@ -1,12 +1,82 @@
-const recipeListDiv = document.querySelector(".recipe-list");
+// const recipeListDiv = document.querySelector(".recipe-list");
+const recipeLists = document.querySelectorAll(".recipe-list");
+
+const bottomBarBtns = document.querySelectorAll(".bottom-bar button");
+
+const TRANSITION_MS = 400;
 
 // Damit wird der am nähesten befindliche Link getriggert, wenn in die recipeList geklickt wird.
 // Ggf. bessere Variante für klicken von Cards implementieren.
-recipeListDiv.addEventListener("click", (event) => {
+recipeLists.forEach(list => {
+    list.addEventListener("click", (event) => {
     window.location = event.target.querySelector("a").href;
 });
+})
 
-sortDivList();
+bottomBarBtns.forEach(button => {
+    button.addEventListener("click", (event) => {
+        setBottomBarWrapperActive(button.id);
+        changeVisibleState(button.id);
+    })
+
+});
+
+// Starting state
+let startingState = "all"
+changeVisibleState(startingState);
+setBottomBarWrapperActive(startingState);
+
+sortRecipeLists(recipeLists);
+
+
+// --- FUNKTIONEN ---
+
+function changeVisibleState (stateId){
+    recipeLists.forEach(list => {
+        if(stateId === "all" || stateId === list.id){
+            // Wenn keine FLEXBOX mehr verwendet wird, hier anpassen.
+            list.style.setProperty("display", "flex");
+        }
+        else{
+            list.style.setProperty("display", "none");
+        }
+    })
+}
+
+function setBottomBarWrapperActive(stateId){
+    
+    if(stateId === "all"){
+        bottomBarBtns.forEach(b => b.querySelector(".bottomBarWrapper")
+        .classList.add("active"));
+        return true;
+    }
+    else{
+        let button = Array.from(bottomBarBtns).find((item) => item.id == stateId);
+
+        bottomBarBtns.forEach(b => b.querySelector(".bottomBarWrapper")
+            .classList.remove("active"));
+        button.querySelector(".bottomBarWrapper")
+            .classList.add("active");
+    }
+}
+
+function sortRecipeLists(divLists) {
+
+    divLists.forEach(list => {
+        let recipes = Array.from(list.querySelectorAll(".card"));
+
+        recipes.sort((item1, item2) => {
+            str1 = item1.querySelector("a").textContent;
+            str2 = item2.querySelector("a").textContent;
+            return str1.localeCompare(str2);
+        });
+
+        recipes.map((item) => list.appendChild(item));
+    })
+
+}
+
+/*sortDivList();
 
 function sortDivList() {
 
@@ -64,16 +134,4 @@ function sortDivList() {
     recipes.map((item) => recipeListDiv.appendChild(item));
     */
 
-}
-
-// const recipeListeUl = document.querySelector(".recipe-list");
-
-// let recipes = Array.from(recipeListeUl.querySelectorAll("li"));
-
-// recipes.sort((item1,item2) => {
-//     str1 = item1.querySelector("a").textContent;
-//     str2 = item2.querySelector("a").textContent;
-//     return str1.localeCompare(str2);
-// });
-
-// recipes.map((item) => recipeListeUl.appendChild(item));
+//}

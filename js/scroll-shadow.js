@@ -1,6 +1,5 @@
 // JS for box-shadow under header when scrolling
 // New div-element "intercept" will be put above header and then observed if still there
-
 const header = document.getElementsByClassName("header")[0];
 const intercept = document.createElement("div");
 
