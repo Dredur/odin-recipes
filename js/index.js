@@ -1,4 +1,4 @@
-const recipeListDiv = document.querySelector("#recipe-list");
+const recipeListDiv = document.querySelector(".recipe-list");
 
 // Damit wird der am nähesten befindliche Link getriggert, wenn in die recipeList geklickt wird.
 // Ggf. bessere Variante für klicken von Cards implementieren.
@@ -66,7 +66,7 @@ function sortDivList() {
 
 }
 
-// const recipeListeUl = document.querySelector("#recipe-list");
+// const recipeListeUl = document.querySelector(".recipe-list");
 
 // let recipes = Array.from(recipeListeUl.querySelectorAll("li"));
 

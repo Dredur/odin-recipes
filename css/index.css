@@ -72,15 +72,18 @@ body {
   align-items: center;
   flex: 1;
   padding: var(--card-gap);
+  /* Unten kein Padding, weil jede recipe-list noch ein padding-bottom hat */
+  padding-bottom: 0;
   background-color: var(--color-surface);
 }
 
-#recipe-list {
+.recipe-list {
   display: flex;
   /* flex-direction: column; */
   flex-wrap: wrap;
   justify-content: space-around;
   gap: var(--card-gap);
+  padding-bottom: var(--card-gap);
 }
 
 .card {
@@ -164,6 +167,14 @@ a {
   background-color: var(--color-surface-variant);
   color: var(--color-primary);
   border-bottom: 1px solid var(--color-outline-variant);
+}
+
+.bottom-bar {
+  display: flex;
+  justify-content: space-around;
+  padding: 0.75em 1.5em;
+  
+
 }
 
 /* Smaller text <a> for smaller portrait mobile devices*/
