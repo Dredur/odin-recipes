@@ -4,7 +4,7 @@ const recipeLists = document.querySelectorAll(".recipe-list");
 const bottomBarBtns = document.querySelectorAll(".bottom-bar button");
 
 const TRANSITION_MS = 400;
-
+const STARTING_STATE = "meals";
 // Damit wird der am nähesten befindliche Link getriggert, wenn in die recipeList geklickt wird.
 // Ggf. bessere Variante für klicken von Cards implementieren.
 recipeLists.forEach(list => {
@@ -22,9 +22,8 @@ bottomBarBtns.forEach(button => {
 });
 
 // Starting state
-let startingState = "all"
-changeVisibleState(startingState);
-setBottomBarWrapperActive(startingState);
+changeVisibleState(STARTING_STATE);
+setBottomBarWrapperActive(STARTING_STATE);
 
 sortRecipeLists(recipeLists);
 
@@ -45,10 +44,11 @@ function changeVisibleState (stateId){
 
 function setBottomBarWrapperActive(stateId){
     
+    setFavicon(stateId);
+
     if(stateId === "all"){
         bottomBarBtns.forEach(b => b.querySelector(".bottomBarWrapper")
         .classList.add("active"));
-        return true;
     }
     else{
         let button = Array.from(bottomBarBtns).find((item) => item.id == stateId);
@@ -58,6 +58,25 @@ function setBottomBarWrapperActive(stateId){
         button.querySelector(".bottomBarWrapper")
             .classList.add("active");
     }
+}
+
+function setFavicon(stateId){
+
+    let favicon = document.querySelector("#favicon");
+ 
+    let newIconPath;
+    
+    if(stateId == "all"){
+        newIconPath = "images/small/Wappen_ohne_Hintergrund_300px height.png"    
+    }
+    else {
+        /* stateId ist "meals", aber svgs "meal_color_01_svg"
+        -> Das hintere "s" bzw. letzten Buchstaben entfernen*/
+        newIconPath = "svg/" + stateId.slice(0,-1) + "_color_01.svg";
+    }
+
+    favicon.setAttribute("href", newIconPath);
+
 }
 
 function sortRecipeLists(divLists) {
