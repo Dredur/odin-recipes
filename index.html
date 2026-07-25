@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Odin Recipes</title>
     <link rel="stylesheet" href="css/index.css">
-    <link id="favicon" rel="shortcut icon" type="image/svg" href="svg/meal_color_01.svg" />
+    <link id="favicon" rel="shortcut icon" type="image/png" href="images/small/Wappen_ohne_Hintergrund_300px height.png" />
     <script src="js/index.js" defer></script>
     <script src="js/scroll-shadow.js" defer></script>
 </head>
@@ -14,8 +14,8 @@
 <body>
     <div class="header">
         <!-- <a href="index.html">Odin<br>Recipes</a> -->
-        <img src="images/small/Wappen_ohne_Hintergrund_300px height.png" alt="Wappen der Buschendorfs" width="241" height="300">
-        <h1>Rezepte</h1>
+        <img id="wappen" src="images/small/Wappen_ohne_Hintergrund_300px height.png" alt="Wappen der Buschendorfs" width="241" height="300">
+        <a href="index.html"><h1>Rezepte</h1></a>
         <a href="ideas.html">Ideen</a>
     </div>
 
@@ -191,7 +191,20 @@
         <span>Copyright @ Dredur 2025 - 2026</span>
     </div>
 
+    <search class="search-bar">
+        <input type="text" id="searchInput" placeholder="Rezept suchen..."/>
+        <button id="searchCloseBtn">
+            Schließen
+        </button>
+    </search>
+
     <div class="bottom-bar">
+        <!-- <button id="all">
+            <div class="bottomBarWrapper">
+                <img src="svg/all_color_01.svg" alt="">
+                <p>Alles</p>
+            </div>
+        </button> -->
         <button id="meals">
             <div class="bottomBarWrapper">
                 <img src="svg/meal_color_01.svg" alt="">
@@ -208,6 +221,11 @@
             <div class="bottomBarWrapper">
                 <img src="svg/sauce_color_01.svg" alt="">
                 <p>Saucen</p>
+            </div>
+        </button>
+        <button id="search">
+            <div class="bottomBarWrapper">
+                <img src="svg/search_color_01.svg" alt="">
             </div>
         </button>
     </div>

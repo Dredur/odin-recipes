@@ -184,13 +184,53 @@ a {
   border-bottom: 1px solid var(--color-outline-variant);
 }
 
+.search-bar {
+  position: sticky;
+  bottom: 0px;
+  background-color: var(--color-surface-variant);
+  border-top: 1px solid var(--color-outline-variant);
+  padding: 0.5rem 0.5rem;
+
+  display: none;
+
+  /* Verschiebt searchbar um 100% nach unten. */
+  transform: translateY(100%);
+  transition: transform 0.3s ease, display 0.3s allow-discrete;
+}
+
+.search-bar.open {
+  display:flex;
+  transform: translateY(0);
+}
+
+/* Damit der Browser weiß, wo sich das Element vor der 
+Transformation auf .search-bar.open befindet, weil es vorher "display: none" war. */
+@starting-style {
+  .search-bar.open {
+    transform: translateY(100%);
+  }
+}
+
+.search-bar #searchInput{
+  flex: 1;
+
+  border-radius: 0.25rem;
+  border: none;
+}
+
+.search-bar #searchCloseBtn{
+  all: unset;
+  cursor: pointer;
+}
+
 .bottom-bar {
   display: flex;
   justify-content: space-between;
-  padding: 0.5em 1.5em;
-  background-color: var(--color-surface-variant);
+
+  /* padding: 0.5em; */
+  /* background-color: var(--color-surface-variant);
   color: var(--color-primary);
-  border-top: 1px solid var(--color-outline-variant);
+  border-top: 1px solid var(--color-outline-variant); */
   /* border-radius: 0.5rem 0.5rem 0 0; */
   position: sticky;
   bottom: 0px;
@@ -203,11 +243,41 @@ a {
   flex: 1;
   display: flex;
   justify-content: center;
+
+  padding: 0.5em;
+  background-color: var(--color-surface-variant);
+  color: var(--color-primary);
+  border-top: 1px solid var(--color-outline-variant);
+
+  /* &#meals {
+    border-radius: 1rem 0 0 0;
+  }
+
+  &#sauces {
+    border-radius: 0 0.5rem 0 0;
+  } */
+
+}
+
+.bottom-bar button#search{
+  flex: 0.4;
+  /* border-radius: 0.5rem 1rem 0 0;
+  margin-left: 0.1rem; */
+
+  & .bottomBarWrapper img{
+    height: calc(var(--h1-font-size)*0.6*0.8);
+  }
+
+  & .bottomBarWrapper.active{
+    border: 0px;
+  }
+
 }
 
 .bottomBarWrapper {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   width: fit-content;
   filter: saturate(0%);

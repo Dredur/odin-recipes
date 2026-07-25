@@ -1,10 +1,44 @@
 // const recipeListDiv = document.querySelector(".recipe-list");
-const recipeLists = document.querySelectorAll(".recipe-list");
+const headerWappenImg = document.querySelector(".header #wappen");
 
-const bottomBarBtns = document.querySelectorAll(".bottom-bar button");
+const recipeLists = document.querySelectorAll(".recipe-list");
+const allCards = document.querySelectorAll(".recipe-list>.card");
+
+const bottomBar = document.querySelector(".bottom-bar");
+const bottomBarBtns = bottomBar.querySelectorAll("button");
+const tabBtns = Array.from(bottomBarBtns).filter((current) => current.id !== "search");
+const searchBtn = Array.from(bottomBarBtns).filter((current) => current.id === "search")[0];
+
+const searchBar = document.querySelector(".search-bar");
+const searchInput = searchBar.querySelector("#searchInput");
+const searchCloseBtn = searchBar.querySelector("#searchCloseBtn");
 
 const TRANSITION_MS = 400;
-const STARTING_STATE = "meals";
+
+let currentState = "meals";
+
+
+// --- Starting state ---
+
+searchBar.style.setProperty("bottom", bottomBar.offsetHeight + "px");
+
+changeRecipeListsVisibility(currentState);
+
+sortRecipeLists(recipeLists);
+
+// recipeLists.forEach((list) => {
+//     list.forEach((card) => {
+//         allCards.add(card);
+//     })
+// });
+
+
+// --- Event-Listeners ---
+
+headerWappenImg.addEventListener("click", (event) => {
+    changeRecipeListsVisibility("all");
+});
+
 // Damit wird der am nähesten befindliche Link getriggert, wenn in die recipeList geklickt wird.
 // Ggf. bessere Variante für klicken von Cards implementieren.
 recipeLists.forEach(list => {
@@ -13,24 +47,46 @@ recipeLists.forEach(list => {
 });
 })
 
-bottomBarBtns.forEach(button => {
+tabBtns.forEach(button => {
     button.addEventListener("click", (event) => {
-        setBottomBarWrapperActive(button.id);
-        changeVisibleState(button.id);
+        changeRecipeListsVisibility(button.id);
     })
 
 });
 
-// Starting state
-changeVisibleState(STARTING_STATE);
-setBottomBarWrapperActive(STARTING_STATE);
+searchBtn.addEventListener("click", (event) => {
+    changeRecipeListsVisibility("all");
+    searchBar.classList.add('open');
+    setSearchBtnActive(true);
+    searchInput.focus();
+});
 
-sortRecipeLists(recipeLists);
+searchCloseBtn.addEventListener("click", (event) =>{
+    searchBar.classList.remove('open');
+    searchInput.value = "";
+    setSearchBtnActive(false);
+    allCards.forEach((card) => {
+        card.style.setProperty("display", "flex");
+    })
+})
 
+searchInput.addEventListener("keyup", (event) => {
+    let inputText = searchInput.value.toLowerCase();
+    console.log(inputText);
+    allCards.forEach((card) => {
+        if(card.querySelector("a").innerHTML.toLowerCase().includes(inputText)){
+            card.style.setProperty("display", "flex");
+        }
+        else{
+            card.style.setProperty("display", "none");
+        }
+    });
+});
 
 // --- FUNKTIONEN ---
 
-function changeVisibleState (stateId){
+function changeRecipeListsVisibility (stateId){
+    
     recipeLists.forEach(list => {
         if(stateId === "all" || stateId === list.id){
             // Wenn keine FLEXBOX mehr verwendet wird, hier anpassen.
@@ -40,26 +96,39 @@ function changeVisibleState (stateId){
             list.style.setProperty("display", "none");
         }
     })
+
+    setTabBtnsActive(stateId);
 }
 
-function setBottomBarWrapperActive(stateId){
+function setTabBtnsActive(stateId){
     
-    setFavicon(stateId);
+    // setFavicon(stateId);
 
     if(stateId === "all"){
-        bottomBarBtns.forEach(b => b.querySelector(".bottomBarWrapper")
+        tabBtns.forEach(b => b.querySelector(".bottomBarWrapper")
         .classList.add("active"));
     }
     else{
-        let button = Array.from(bottomBarBtns).find((item) => item.id == stateId);
+        let button = Array.from(tabBtns).find((item) => item.id == stateId);
 
-        bottomBarBtns.forEach(b => b.querySelector(".bottomBarWrapper")
+        tabBtns.forEach(b => b.querySelector(".bottomBarWrapper")
             .classList.remove("active"));
         button.querySelector(".bottomBarWrapper")
             .classList.add("active");
     }
 }
 
+function setSearchBtnActive(setToActive){
+    if(setToActive === true){
+        searchBtn.querySelector(".bottomBarWrapper").classList.add("active");
+    }
+    else{
+        searchBtn.querySelector(".bottomBarWrapper").classList.remove("active");
+    }
+}
+
+// Not in use, because it is confusing when recipe tabs are open.
+// Than you cant differentiate between a recipe and the index-site.
 function setFavicon(stateId){
 
     let favicon = document.querySelector("#favicon");
