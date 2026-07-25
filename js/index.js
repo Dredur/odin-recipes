@@ -59,6 +59,7 @@ searchBtn.addEventListener("click", (event) => {
     searchBar.classList.add('open');
     setSearchBtnActive(true);
     searchInput.focus();
+    window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
 searchCloseBtn.addEventListener("click", (event) =>{
