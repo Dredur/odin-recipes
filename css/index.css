@@ -187,11 +187,13 @@ a {
 .search-bar {
   position: sticky;
   bottom: 0px;
-  background-color: var(--color-surface-variant);
+  background-color: var(--color-secondary-container);
   border-top: 1px solid var(--color-outline-variant);
-  padding: 0.5rem 0.5rem;
+  padding: 0.5em 1.5em;
 
   display: none;
+  align-content: center;  
+  gap: 1em;
 
   /* Verschiebt searchbar um 100% nach unten. */
   transform: translateY(100%);
@@ -200,6 +202,7 @@ a {
 
 .search-bar.open {
   display:flex;
+  align-content: center;
   transform: translateY(0);
 }
 
@@ -213,14 +216,61 @@ Transformation auf .search-bar.open befindet, weil es vorher "display: none" war
 
 .search-bar #searchInput{
   flex: 1;
+  padding-left: 0.5em;
+  font-size: var(--p-font-size);
+  font-family: var(--font-normal);
+  color: var(--color-secondary);
 
-  border-radius: 0.25rem;
+  border-radius: 0.25em;
   border: none;
 }
 
 .search-bar #searchCloseBtn{
   all: unset;
   cursor: pointer;
+  height: calc(var(--h1-font-size)*0.6*0.8);
+  border: 1px solid var(--color-secondary);
+  border-radius: 0.25em;
+  aspect-ratio: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  font-size: var(--h4-font-size);
+  font-family: var(--font-normal);
+  color: var(--color-secondary);
+  /* The font pushes the small text out of center */
+  line-height: 0;
+}
+
+.bottom-bar button#search{
+  flex: 0.4;
+  justify-content: end;
+  padding-left: 0;
+  /* border-radius: 0.5rem 1rem 0 0;
+  margin-left: 0.1rem; */
+
+  & .bottomBarWrapper img{
+    height: calc(var(--h1-font-size)*0.6*0.8);
+  }
+
+  &.active {
+    background-color: var(--color-secondary-container);
+  }
+
+  & .bottomBarWrapper.active{
+    border: 0px;
+  }
+
+  /* search-icon is not visible in darkmode, but inverted looks nice. */
+  @media (prefers-color-scheme: dark) {
+  
+    & .bottomBarWrapper img{
+      filter: invert(100%);
+    }
+  }
+
 }
 
 .bottom-bar {
@@ -244,7 +294,7 @@ Transformation auf .search-bar.open befindet, weil es vorher "display: none" war
   display: flex;
   justify-content: center;
 
-  padding: 0.5em;
+  padding: 0.5em 1.5em;
   background-color: var(--color-surface-variant);
   color: var(--color-primary);
   border-top: 1px solid var(--color-outline-variant);
@@ -256,21 +306,6 @@ Transformation auf .search-bar.open befindet, weil es vorher "display: none" war
   &#sauces {
     border-radius: 0 0.5rem 0 0;
   } */
-
-}
-
-.bottom-bar button#search{
-  flex: 0.4;
-  /* border-radius: 0.5rem 1rem 0 0;
-  margin-left: 0.1rem; */
-
-  & .bottomBarWrapper img{
-    height: calc(var(--h1-font-size)*0.6*0.8);
-  }
-
-  & .bottomBarWrapper.active{
-    border: 0px;
-  }
 
 }
 
