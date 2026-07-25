@@ -63,7 +63,7 @@ p {
 body {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100svh;
 }
 
 .content {
@@ -277,11 +277,11 @@ Transformation auf .search-bar.open befindet, weil es vorher "display: none" war
   display: flex;
   justify-content: space-between;
 
-  /* padding: 0.5em; */
-  /* background-color: var(--color-surface-variant);
+  padding: 0.5em 1.5em;
+  background-color: var(--color-surface-variant);
   color: var(--color-primary);
-  border-top: 1px solid var(--color-outline-variant); */
-  /* border-radius: 0.5rem 0.5rem 0 0; */
+  border-top: 1px solid var(--color-outline-variant);
+
   position: sticky;
   bottom: 0px;
   z-index: 1;
@@ -293,20 +293,6 @@ Transformation auf .search-bar.open befindet, weil es vorher "display: none" war
   flex: 1;
   display: flex;
   justify-content: center;
-
-  padding: 0.5em 1.5em;
-  background-color: var(--color-surface-variant);
-  color: var(--color-primary);
-  border-top: 1px solid var(--color-outline-variant);
-
-  /* &#meals {
-    border-radius: 1rem 0 0 0;
-  }
-
-  &#sauces {
-    border-radius: 0 0.5rem 0 0;
-  } */
-
 }
 
 .bottomBarWrapper {
