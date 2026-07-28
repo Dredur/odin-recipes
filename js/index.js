@@ -26,13 +26,6 @@ changeRecipeListsVisibility(currentState);
 
 sortRecipeLists(recipeLists);
 
-// recipeLists.forEach((list) => {
-//     list.forEach((card) => {
-//         allCards.add(card);
-//     })
-// });
-
-
 // --- Event-Listeners ---
 
 headerWappenImg.addEventListener("click", (event) => {
@@ -71,18 +64,75 @@ searchCloseBtn.addEventListener("click", (event) =>{
     })
 })
 
-searchInput.addEventListener("keyup", (event) => {
+let newestSearchId = 0;
+
+searchInput.addEventListener("keyup", async (event) => {    
     let inputText = searchInput.value.toLowerCase();
     console.log(inputText);
-    allCards.forEach((card) => {
-        if(card.querySelector("a").innerHTML.toLowerCase().includes(inputText)){
-            card.style.setProperty("display", "flex");
+    // allCards.forEach((card) => {
+
+    //     if(card.querySelector("a").innerHTML.toLowerCase().includes(inputText)){
+    //         card.style.setProperty("display", "flex");
+    //         console.log(card.innerHTML);
+    //     }
+    //     else{
+    //         card.style.setProperty("display", "none");
+    //     }
+
+    // });
+
+    newestSearchId++;
+    let curSearchId = newestSearchId;
+
+    // allCards.forEach wartet nicht auf await (async function) 
+    for (let card of allCards) {
+        
+        /* Das ist viel zu rechenintensiv.
+        Alternative 1:
+        - Einmal zum Start der Website eine Funktion ausführen lassen, die 
+        ein Array mit den alle Links und den innerHtml Texten erstellt.
+        - Suche über dieses Array laufen lassen.
+        ! async aus Parameter des Listeners entfernen "async (event)"
+        
+        Alternative 2:
+        - Vor Websitenstart, also jedes Mal wenn Änderung im Code
+        -> JSON Datei mit Array aus Alternative 1 oder noch besser nur mit Zutaten
+        erstellen.
+        - Nur die JSON mit fertigen Daten bei Start der Website fetchen.
+        */
+        let checkRecipe = await isTextInRecipe(card, inputText);
+        
+        /* Falls inzwischen durch einen neuen Tastendruck eine neue isTextInRecipe
+        gestartet wurde, dann ist dieses alte Ergebnis hier nicht mehr gültig und 
+        darf nicht ausgegeben werden.*/
+        if(curSearchId !== newestSearchId){
+            return;
         }
         else{
-            card.style.setProperty("display", "none");
+            if(card.querySelector("a").innerHTML.toLowerCase().includes(inputText)
+            || checkRecipe){
+                card.style.setProperty("display", "flex");
+                console.log(card.innerHTML);
+            }
+            else{
+                card.style.setProperty("display", "none");
+            }
         }
-    });
+
+    }
+
 });
+
+async function isTextInRecipe(card, searchText){
+
+    // let allRecipeLinks = document.querySelectorAll(".card a");
+    // let recipe = await fetch(allRecipeLinks[0].href);
+    
+    let recipe = await fetch(card.querySelector("a").href)
+    let html = await recipe.text();
+    console.log(html.toLowerCase().includes(searchText));
+    return html.toLowerCase().includes(searchText);
+}
 
 // --- FUNKTIONEN ---
 
