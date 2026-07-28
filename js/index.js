@@ -1,8 +1,9 @@
-// const recipeListDiv = document.querySelector(".recipe-list");
+console.log("--- Start index.js ---")
+
 const headerWappenImg = document.querySelector(".header #wappen");
 
-const recipeLists = document.querySelectorAll(".recipe-list");
-const allCards = document.querySelectorAll(".recipe-list>.card");
+const domRecipeLists = document.querySelectorAll(".recipe-list");
+const domRecipeCards = document.querySelectorAll(".recipe-list>.card");
 
 const bottomBar = document.querySelector(".bottom-bar");
 const bottomBarBtns = bottomBar.querySelectorAll("button");
@@ -18,14 +19,17 @@ const TRANSITION_MS = 400;
 
 let currentState = "meals";
 
+let indexCards = [];
 
 // --- Starting state ---
 
 searchBar.style.setProperty("bottom", bottomBar.offsetHeight + "px");
 
+initCardsArr(indexCards, domRecipeCards);
+
 changeRecipeListsVisibility(currentState);
 
-sortRecipeLists(recipeLists);
+sortRecipeLists(domRecipeLists);
 
 // --- Event-Listeners ---
 
@@ -35,7 +39,7 @@ headerWappenImg.addEventListener("click", (event) => {
 
 // Damit wird der am nähesten befindliche Link getriggert, wenn in die recipeList geklickt wird.
 // Ggf. bessere Variante für klicken von Cards implementieren.
-recipeLists.forEach(list => {
+domRecipeLists.forEach(list => {
     list.addEventListener("click", (event) => {
     window.location = event.target.querySelector("a").href;
 });
@@ -60,7 +64,7 @@ searchCloseBtn.addEventListener("click", (event) =>{
     searchBar.classList.remove('open');
     searchInput.value = "";
     setSearchBtnActive(false);
-    allCards.forEach((card) => {
+    domRecipeCards.forEach((card) => {
         card.style.setProperty("display", "flex");
     })
 
@@ -78,85 +82,79 @@ searchRecipeBtn.addEventListener("click", (event) =>{
     searchInput.dispatchEvent(new Event("keyup"));
 });
 
-let newestSearchId = 0;
+searchInput.addEventListener("keyup", (event) => {
 
-searchInput.addEventListener("keyup", async (event) => {
+    let inputText = searchInput.value.toLocaleLowerCase();
 
-    let inputText = searchInput.value.toLowerCase();
-   
-    // allCards.forEach((card) => {
-
-    //     if(card.querySelector("a").innerHTML.toLowerCase().includes(inputText)){
-    //         card.style.setProperty("display", "flex");
-    //         console.log(card.innerHTML);
-    //     }
-    //     else{
-    //         card.style.setProperty("display", "none");
-    //     }
-
-    // });
-
-    newestSearchId++;
-    let curSearchId = newestSearchId;
-
-    // allCards.forEach wartet nicht auf await (async function) 
-    for (let card of allCards) {
+    indexCards.forEach((indexCard) => {
         
-        /* Das ist viel zu rechenintensiv.
-        Alternative 1:
-        - Einmal zum Start der Website eine Funktion ausführen lassen, die 
-        ein Array mit den alle Links und den innerHtml Texten erstellt.
-        - Suche über dieses Array laufen lassen.
-        ! async aus Parameter des Listeners entfernen "async (event)"
+        // search in recipeText when button is active
+        let checkRecipe = false;
+        if(searchRecipeBtn.classList.contains("active")){
+            checkRecipe = indexCard.recipeText.includes(inputText);
+        }
         
-        Alternative 2:
+        // search in recipe title
+        if(indexCard.title.toLocaleLowerCase().includes(inputText)
+        || checkRecipe){
+            indexCard.card.style.setProperty("display", "flex");
+        }
+        else{
+            indexCard.card.style.setProperty("display", "none");
+        }
+    })
+});
+
+
+// --- Objekte ---
+
+function makeIndexCard (card, href, title, recipeText){
+    return {
+        card, // same card: card
+        href,
+        title,
+        recipeText
+    }
+}
+
+
+// --- FUNKTIONEN ---
+
+async function initCardsArr (cardArr, domCards){
+    /*Alternative:
         - Vor Websitenstart, also jedes Mal wenn Änderung im Code
         -> JSON Datei mit Array aus Alternative 1 oder noch besser nur mit Zutaten
         erstellen.
         - Nur die JSON mit fertigen Daten bei Start der Website fetchen.
         */
 
-        let checkRecipe = false;
+    let start = performance.now();
 
-        if(searchRecipeBtn.classList.contains("active")){
-            checkRecipe = await isTextInRecipe(card, inputText);
-        }
-        
-        /* Falls inzwischen durch einen neuen Tastendruck eine neue isTextInRecipe
-        gestartet wurde, dann ist dieses alte Ergebnis hier nicht mehr gültig und 
-        darf nicht ausgegeben werden.*/
-        if(curSearchId !== newestSearchId){
-            return;
-        }
-        else{
-            if(card.querySelector("a").innerHTML.toLowerCase().includes(inputText)
-            || checkRecipe){
-                card.style.setProperty("display", "flex");
-            }
-            else{
-                card.style.setProperty("display", "none");
-            }
-        }
-
+    // domCards.forEach wartet nicht auf await (async function) 
+    for (let card of domCards) {
+        let href = card.querySelector("a").href;
+        let title = card.querySelector("a").innerHTML;
+        let recipeText = await getRecipeText(href);
+        indexCards.push(makeIndexCard(card, href, title, recipeText.toLocaleLowerCase()));
     }
 
-});
+    let end = performance.now();
+    console.log(cardArr.length + " indexCards wurden innerhalb von " 
+        + (end-start).toFixed(2) + " ms initialisiert.")
+    /*console.log("Größe des Arrays: " + 
+        (JSON.stringify(cardArr).length / 1000000).toFixed(2)
+        + " MB");*/
+}
 
-// --- FUNKTIONEN ---
-
-async function isTextInRecipe(card, searchText){
-
-    // let allRecipeLinks = document.querySelectorAll(".card a");
-    // let recipe = await fetch(allRecipeLinks[0].href);
-    
-    let recipe = await fetch(card.querySelector("a").href)
-    let html = await recipe.text();
-    return html.toLowerCase().includes(searchText);
+async function getRecipeText(cardHref){
+    let recipe = await fetch(cardHref);
+    let innerHtml = await recipe.text();
+    return innerHtml;
 }
 
 function changeRecipeListsVisibility (stateId){
     
-    recipeLists.forEach(list => {
+    domRecipeLists.forEach(list => {
         if(stateId === "all" || stateId === list.id){
             // Wenn keine FLEXBOX mehr verwendet wird, hier anpassen.
             list.style.setProperty("display", "flex");
@@ -238,7 +236,8 @@ function sortRecipeLists(divLists) {
             str2 = item2.querySelector("a").textContent;
             return str1.localeCompare(str2);
         });
-
+        
+        // appendChild only moves item, when the item exists in the array
         recipes.map((item) => list.appendChild(item));
     })
 
