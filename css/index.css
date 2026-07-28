@@ -203,6 +203,7 @@ a {
 .search-bar.open {
   display:flex;
   align-content: center;
+  justify-content: center;
   transform: translateY(0);
 }
 
@@ -216,6 +217,7 @@ Transformation auf .search-bar.open befindet, weil es vorher "display: none" war
 
 .search-bar #searchInput{
   flex: 1;
+  max-width: var(--card-width);
   padding-left: 0.5em;
   font-size: var(--p-font-size);
   font-family: var(--font-normal);
@@ -223,6 +225,25 @@ Transformation auf .search-bar.open befindet, weil es vorher "display: none" war
 
   border-radius: 0.25em;
   border: none;
+}
+
+.search-bar #searchRecipeBtn{
+  all: unset;
+  cursor: pointer;
+  height: calc(var(--h1-font-size)*0.6*0.8);
+
+  filter: saturate(0%);
+  opacity: 60%;
+
+  img{
+    height: 100%;
+  }
+
+  &.active{
+    filter: saturate(100%);
+    opacity: 100%;
+  }
+
 }
 
 .search-bar #searchCloseBtn{
@@ -253,10 +274,6 @@ Transformation auf .search-bar.open befindet, weil es vorher "display: none" war
 
   & .bottomBarWrapper img{
     height: calc(var(--h1-font-size)*0.6*0.8);
-  }
-
-  &.active {
-    background-color: var(--color-secondary-container);
   }
 
   & .bottomBarWrapper.active{

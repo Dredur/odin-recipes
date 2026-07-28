@@ -12,6 +12,7 @@ const searchBtn = Array.from(bottomBarBtns).filter((current) => current.id === "
 const searchBar = document.querySelector(".search-bar");
 const searchInput = searchBar.querySelector("#searchInput");
 const searchCloseBtn = searchBar.querySelector("#searchCloseBtn");
+const searchRecipeBtn = searchBar.querySelector("#searchRecipeBtn");
 
 const TRANSITION_MS = 400;
 
@@ -62,13 +63,27 @@ searchCloseBtn.addEventListener("click", (event) =>{
     allCards.forEach((card) => {
         card.style.setProperty("display", "flex");
     })
-})
+
+    setSearchRecipeBtnActive(false);
+});
+
+// dont lose focus on input when click this button.
+searchRecipeBtn.addEventListener("mousedown", (event) =>{
+    event.preventDefault();
+});
+
+searchRecipeBtn.addEventListener("click", (event) =>{
+    // want to change status -> !.contains
+    setSearchRecipeBtnActive(!searchRecipeBtn.classList.contains("active"));
+    searchInput.dispatchEvent(new Event("keyup"));
+});
 
 let newestSearchId = 0;
 
-searchInput.addEventListener("keyup", async (event) => {    
+searchInput.addEventListener("keyup", async (event) => {
+
     let inputText = searchInput.value.toLowerCase();
-    console.log(inputText);
+   
     // allCards.forEach((card) => {
 
     //     if(card.querySelector("a").innerHTML.toLowerCase().includes(inputText)){
@@ -100,7 +115,12 @@ searchInput.addEventListener("keyup", async (event) => {
         erstellen.
         - Nur die JSON mit fertigen Daten bei Start der Website fetchen.
         */
-        let checkRecipe = await isTextInRecipe(card, inputText);
+
+        let checkRecipe = false;
+
+        if(searchRecipeBtn.classList.contains("active")){
+            checkRecipe = await isTextInRecipe(card, inputText);
+        }
         
         /* Falls inzwischen durch einen neuen Tastendruck eine neue isTextInRecipe
         gestartet wurde, dann ist dieses alte Ergebnis hier nicht mehr gültig und 
@@ -112,7 +132,6 @@ searchInput.addEventListener("keyup", async (event) => {
             if(card.querySelector("a").innerHTML.toLowerCase().includes(inputText)
             || checkRecipe){
                 card.style.setProperty("display", "flex");
-                console.log(card.innerHTML);
             }
             else{
                 card.style.setProperty("display", "none");
@@ -123,6 +142,8 @@ searchInput.addEventListener("keyup", async (event) => {
 
 });
 
+// --- FUNKTIONEN ---
+
 async function isTextInRecipe(card, searchText){
 
     // let allRecipeLinks = document.querySelectorAll(".card a");
@@ -130,11 +151,8 @@ async function isTextInRecipe(card, searchText){
     
     let recipe = await fetch(card.querySelector("a").href)
     let html = await recipe.text();
-    console.log(html.toLowerCase().includes(searchText));
     return html.toLowerCase().includes(searchText);
 }
-
-// --- FUNKTIONEN ---
 
 function changeRecipeListsVisibility (stateId){
     
@@ -175,6 +193,17 @@ function setSearchBtnActive(setToActive){
     }
     else{
         searchBtn.querySelector(".bottomBarWrapper").classList.remove("active");
+    }
+}
+
+function setSearchRecipeBtnActive(setActive){
+    if(setActive === false){
+        searchRecipeBtn.classList.remove("active");
+        searchInput.placeholder = "Rezeptnamen suchen..."
+    }
+    else{
+        searchRecipeBtn.classList.add("active");
+        searchInput.placeholder = "Rezepttexte durchsuchen..."
     }
 }
 
